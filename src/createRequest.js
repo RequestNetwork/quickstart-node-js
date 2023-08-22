@@ -30,7 +30,7 @@
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
 
-  const request = await requestClient.createRequest({
+  const requestCreateParameters = {
     requestInfo: {
       currency: {
         type: Types.RequestLogic.CURRENCY.ERC20,
@@ -65,7 +65,9 @@
       type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
       value: payeeIdentity,
     },
-  });
+  };
+
+  const request = await requestClient.createRequest(requestCreateParameters);
   const requestData = await request.waitForConfirmation();
   console.log(JSON.stringify(requestData));
 })();

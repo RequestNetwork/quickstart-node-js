@@ -36,7 +36,7 @@
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
 
-  const request = await requestClient.createRequest({
+  const requestCreateParameters = {
     requestInfo: {
       currency: {
         type: Types.RequestLogic.CURRENCY.ERC20,
@@ -71,7 +71,9 @@
       type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
       value: payeeIdentity,
     },
-  });
+  };
+
+  const request = await requestClient.createRequest(requestCreateParameters);
   let requestData = await request.waitForConfirmation();
   console.log(`Created Request: ${JSON.stringify(requestData)}`);
 
@@ -79,7 +81,7 @@
     process.env.JSON_RPC_PROVIDER_URL,
   );
   const payerWallet = new Wallet(
-    `0x${process.env.PAYER_PRIVATE_KEY}`,
+    process.env.PAYER_PRIVATE_KEY, // Must have 0x prefix
     provider,
   );
 
