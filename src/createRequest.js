@@ -8,22 +8,28 @@
     EthereumPrivateKeySignatureProvider,
   } = require("@requestnetwork/epk-signature");
   const { config } = require("dotenv");
+
   // Load environment variables from .env file (without overriding variables already set)
   config();
+
   const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
     privateKey: process.env.PAYEE_PRIVATE_KEY, // Must include 0x prefix
   });
+
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
       baseURL: "https://goerli.gateway.request.network/",
     },
     signatureProvider: epkSignatureProvider,
   });
+
+  // In this example, the payee is also the payer and payment recipient.
   const payeeIdentity = "0x7eB023BFbAeE228de6DC5B92D0BeEB1eDb1Fd567";
   const payerIdentity = payeeIdentity;
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
+
   const request = await requestClient.createRequest({
     requestInfo: {
       currency: {
