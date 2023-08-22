@@ -19,7 +19,7 @@
   config();
   const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
-    privateKey: `0x${process.env.PAYEE_PRIVATE_KEY}`, // Must include 0x prefix
+    privateKey: process.env.PAYEE_PRIVATE_KEY, // Must include 0x prefix
   });
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
