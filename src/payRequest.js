@@ -15,22 +15,27 @@
   } = require("@requestnetwork/payment-processor");
   const { providers, Wallet } = require("ethers");
   const { config } = require("dotenv");
+
   // Load environment variables from .env file (without overriding variables already set)
   config();
+
   const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
     privateKey: process.env.PAYEE_PRIVATE_KEY, // Must include 0x prefix
   });
+
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
       baseURL: "https://goerli.gateway.request.network/",
     },
     signatureProvider: epkSignatureProvider,
   });
+
   const payeeIdentity = "0x7eB023BFbAeE228de6DC5B92D0BeEB1eDb1Fd567";
   const payerIdentity = payeeIdentity;
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
+
   const request = await requestClient.createRequest({
     requestInfo: {
       currency: {
@@ -69,6 +74,7 @@
   });
   let requestData = await request.waitForConfirmation();
   console.log(`Created Request: ${JSON.stringify(requestData)}`);
+
   const provider = new providers.JsonRpcProvider(
     process.env.JSON_RPC_PROVIDER_URL,
   );
@@ -76,6 +82,7 @@
     `0x${process.env.PAYER_PRIVATE_KEY}`,
     provider,
   );
+
   console.log(
     `Checking if payer ${payerWallet.address} has sufficient funds...`,
   );
@@ -90,6 +97,7 @@
   if (!_hasSufficientFunds) {
     throw new Error(`Insufficient Funds: ${payerWallet.address}`);
   }
+
   console.log(
     `Checking if payer ${payerWallet.address} has sufficient approval...`,
   );
@@ -105,13 +113,20 @@
     await approvalTx.wait(2);
     console.log(`Approval granted. ${approvalTx.hash}`);
   }
+
   const paymentTx = await payRequest(requestData, payerWallet);
   await paymentTx.wait(2);
   console.log(`Payment complete. ${paymentTx.hash}`);
-  // TODO: add timeout
+
+  let startTime = Date.now();
   while (requestData.balance?.balance < requestData.expectedAmount) {
     requestData = await request.refresh();
     console.log(`current balance = ${requestData.balance?.balance}`);
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Check if 5 seconds have passed, and if so, break out of the loop
+    if (Date.now() - startTime >= 5000) {
+      console.log("Timeout: Exiting loop after 5 seconds.");
+      break;
+    }
   }
 })();
