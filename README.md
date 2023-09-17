@@ -36,7 +36,7 @@ npm install
 Run the scripts
 
 ```bash
-npm retrieve
-npm create
-npm pay
+npm run retrieve
+npm run create
+npm run pay
 ```
