@@ -36,7 +36,7 @@ npm install
 Run the scripts
 
 ```bash
-node retrieveRequest.js
-node createRequest.js
-node payRequest.js
+npm run retrieve
+npm run create
+npm run pay
 ```

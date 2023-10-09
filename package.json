@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "retrieve": "node src/retrieveRequest.js",
+    "create": "node src/createRequest.js",
+    "pay": "node src/payRequest.js"
   },
   "author": "",
   "license": "ISC",
