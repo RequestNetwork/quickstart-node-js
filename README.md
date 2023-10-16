@@ -1,7 +1,7 @@
 # quickstart-node.js
 
 This repo will introduce the four primary operations provided by Request
-Network’s SDK while using the EthereumPrivateKeySignatureProvider to sign
+Network’s SDK while using the `EthereumPrivateKeySignatureProvider` to sign
 requests with a private key that is managed outside of a wallet.
 
 This approach works well for Node.js environments without access to a web3 wallet.
