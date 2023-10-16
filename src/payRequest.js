@@ -16,7 +16,7 @@
   const { providers, Wallet } = require("ethers");
   const { config } = require("dotenv");
 
-  // Load environment variables from .env file (without overriding variables already set)
+  // Load environment variables from .env file
   config();
 
   const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
