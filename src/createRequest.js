@@ -8,6 +8,7 @@
     EthereumPrivateKeySignatureProvider,
   } = require("@requestnetwork/epk-signature");
   const { config } = require("dotenv");
+  const { Wallet } = require("ethers");
 
   // Load environment variables from .env file
   config();
@@ -25,7 +26,7 @@
   });
 
   // In this example, the payee is also the payer and payment recipient.
-  const payeeIdentity = "0x7eB023BFbAeE228de6DC5B92D0BeEB1eDb1Fd567";
+  const payeeIdentity = new Wallet(process.env.PAYEE_PRIVATE_KEY).address;
   const payerIdentity = payeeIdentity;
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
