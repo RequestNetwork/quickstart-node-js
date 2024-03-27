@@ -27,7 +27,7 @@
 
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
-      baseURL: "https://goerli.gateway.request.network/",
+      baseURL: "https://sepolia.gateway.request.network/",
     },
     signatureProvider: epkSignatureProvider,
   });
@@ -41,8 +41,8 @@
     requestInfo: {
       currency: {
         type: Types.RequestLogic.CURRENCY.ERC20,
-        value: "0xBA62BCfcAaFc6622853cca2BE6Ac7d845BC0f2Dc",
-        network: "goerli",
+        value: "0x370DE27fdb7D1Ff1e1BaA7D11c5820a324Cf623C",
+        network: "sepolia",
       },
       expectedAmount: "1000000000000000000",
       payee: {
@@ -58,7 +58,7 @@
     paymentNetwork: {
       id: Types.Extension.PAYMENT_NETWORK_ID.ERC20_FEE_PROXY_CONTRACT,
       parameters: {
-        paymentNetworkName: "goerli",
+        paymentNetworkName: "sepolia",
         paymentAddress: paymentRecipient,
         feeAddress: feeRecipient,
         feeAmount: "0",

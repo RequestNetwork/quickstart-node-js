@@ -5,7 +5,7 @@
   } = require("@requestnetwork/request-client.js");
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
-      baseURL: "https://goerli.gateway.request.network/",
+      baseURL: "https://sepolia.gateway.request.network/",
     },
   });
 
