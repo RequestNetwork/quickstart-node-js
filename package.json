@@ -13,15 +13,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@requestnetwork/epk-signature": "^0.5.36-next.1918",
-    "@requestnetwork/payment-processor": "^0.38.1-next.1918",
-    "@requestnetwork/request-client.js": "^0.40.1-next.1918",
-    "dotenv": "^16.3.1",
-    "ethers": "^5.7.2"
+    "@requestnetwork/epk-signature": "0.5.40",
+    "@requestnetwork/payment-processor": "0.43.0",
+    "@requestnetwork/request-client.js": "0.45.0",
+    "dotenv": "16.3.1",
+    "ethers": "5.7.2"
   },
   "devDependencies": {
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
+    "husky": "8.0.3",
+    "lint-staged": "14.0.1",
     "prettier": "3.0.2"
   },
   "lint-staged": {
