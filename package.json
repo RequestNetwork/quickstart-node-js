@@ -9,7 +9,8 @@
     "retrieve": "node src/retrieveRequest.js",
     "create": "node src/createRequest.js",
     "create-native": "node src/createRequestNative.js",
-    "pay": "node src/payRequest.js"
+    "pay": "node src/payRequest.js",
+    "pay-native": "node src/payRequestNative.js"
   },
   "author": "",
   "license": "ISC",
