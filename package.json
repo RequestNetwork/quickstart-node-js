@@ -8,6 +8,7 @@
     "prepare": "husky install",
     "retrieve": "node src/retrieveRequest.js",
     "create": "node src/createRequest.js",
+    "create-native": "node src/createRequestNative.js",
     "pay": "node src/payRequest.js"
   },
   "author": "",
