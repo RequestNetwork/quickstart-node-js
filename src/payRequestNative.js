@@ -39,11 +39,11 @@
   const requestCreateParameters = {
     requestInfo: {
       currency: {
-        type: Types.RequestLogic.CURRENCY.ERC20,
-        value: "0x370DE27fdb7D1Ff1e1BaA7D11c5820a324Cf623C",
+        type: Types.RequestLogic.CURRENCY.ETH,
+        value: "ETH",
         network: "sepolia",
       },
-      expectedAmount: "1000000000000000000",
+      expectedAmount: "100000000000000000", // 0.1 ETH
       payee: {
         type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
         value: payeeIdentity,
@@ -55,7 +55,7 @@
       timestamp: Utils.getCurrentTimestampInSecond(),
     },
     paymentNetwork: {
-      id: Types.Extension.PAYMENT_NETWORK_ID.ERC20_FEE_PROXY_CONTRACT,
+      id: Types.Extension.PAYMENT_NETWORK_ID.ETH_FEE_PROXY_CONTRACT,
       parameters: {
         paymentNetworkName: "sepolia",
         paymentAddress: paymentRecipient,
