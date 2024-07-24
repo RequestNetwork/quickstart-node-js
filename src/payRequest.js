@@ -15,7 +15,6 @@
   } = require("@requestnetwork/payment-processor");
   const { providers, Wallet } = require("ethers");
   const { config } = require("dotenv");
-  const { Wallet } = require("ethers");
 
   // Load environment variables from .env file
   config();
@@ -89,13 +88,11 @@
   console.log(
     `Checking if payer ${payerWallet.address} has sufficient funds...`,
   );
-  const _hasSufficientFunds = await hasSufficientFunds(
-    requestData,
-    payerWallet.address,
-    {
-      provider: provider,
-    },
-  );
+  const _hasSufficientFunds = await hasSufficientFunds({
+    request: requestData,
+    address: payerWallet.address,
+    providerOptions: { provider: provider },
+  });
   console.log(`_hasSufficientFunds = ${_hasSufficientFunds}`);
   if (!_hasSufficientFunds) {
     throw new Error(`Insufficient Funds: ${payerWallet.address}`);

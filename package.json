@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@requestnetwork/epk-signature": "0.7.1-next.2043",
-    "@requestnetwork/payment-processor": "0.45.1-next.2043",
-    "@requestnetwork/request-client.js": "0.47.1-next.2043",
+    "@requestnetwork/epk-signature": "0.8.0",
+    "@requestnetwork/payment-processor": "0.46.0",
+    "@requestnetwork/request-client.js": "0.48.0",
     "dotenv": "16.3.1",
     "ethers": "5.7.2"
   },
