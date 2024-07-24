@@ -15,7 +15,6 @@
   } = require("@requestnetwork/payment-processor");
   const { providers, Wallet } = require("ethers");
   const { config } = require("dotenv");
-  const { Wallet } = require("ethers");
 
   // Load environment variables from .env file
   config();
