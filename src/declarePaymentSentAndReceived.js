@@ -84,9 +84,22 @@
     },
   };
 
-  const request = await payeeRequestClient.createRequest(
+  const payeeRequest = await payeeRequestClient.createRequest(
     requestCreateParameters,
   );
-  const requestData = await request.waitForConfirmation();
-  console.log(JSON.stringify(requestData));
+  const payeeRequestData = await payeeRequest.waitForConfirmation();
+  console.log(JSON.stringify(payeeRequestData, null, 2));
+
+  const payerRequest = await payerRequestClient.fromRequestId(
+    payeeRequestData.requestId,
+  );
+  const payerRequestData = payerRequest.getData();
+  console.log(JSON.stringify(payerRequestData, null, 2));
+
+  const payerRequestData2 = payerRequest.declareSentPayment(
+    payerRequestData.expectedAmount,
+    "payment initiated from the bank",
+    payerIdentity,
+  );
+  console.log(JSON.stringify(payerRequestData2, null, 2));
 })();
