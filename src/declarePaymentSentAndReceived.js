@@ -117,7 +117,7 @@ const waitForConfirmation = async (dataOrPromise) => {
       JSON.stringify(payerRequestDataAfterSent, null, 2),
   );
 
-  const payerReqeustDataAfterSentConfirmed = waitForConfirmation(
+  const payerReqeustDataAfterSentConfirmed = await waitForConfirmation(
     payerRequestDataAfterSent,
   );
 
