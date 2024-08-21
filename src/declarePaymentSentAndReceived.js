@@ -91,13 +91,13 @@
     requestCreateParameters,
   );
   const payeeRequestData = await payeeRequest.waitForConfirmation();
-  console.log("payeeRequestData: " + JSON.stringify(payeeRequestData, null, 2));
+  // console.log("payeeRequestData: " + JSON.stringify(payeeRequestData, null, 2));
 
   const payerRequest = await payerRequestClient.fromRequestId(
     payeeRequestData.requestId,
   );
   const payerRequestData = payerRequest.getData();
-  console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
+  // console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
 
   const payerRequestData2 = await payerRequest.declareSentPayment(
     payerRequestData.expectedAmount,
