@@ -1,3 +1,11 @@
+const waitForConfirmation = async (dataOrPromise) => {
+  const data = await dataOrPromise;
+  return new Promise((resolve, reject) => {
+    data.on("confirmed", resolve);
+    data.on("error", reject);
+  });
+};
+
 process.on("uncaughtException", (err) => {
   console.error(err);
   process.exit(1);
@@ -107,19 +115,21 @@ process.on("unhandledRejection", (err) => {
   const payerRequestData = payerRequest.getData();
   // console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
 
-  const payerRequestData2 = await payerRequest.declareSentPayment(
-    payerRequestData.expectedAmount,
-    "payment initiated from the bank",
-    payerIdentity,
+  const payerRequestData2 = await waitForConfirmation(
+    payerRequest.declareSentPayment(
+      payerRequestData.expectedAmount,
+      "payment initiated from the bank",
+      payerIdentity,
+    ),
   );
   console.log(
     "payerRequestData2: " + JSON.stringify(payerRequestData2, null, 2),
   );
 
-  const payerRequestDataAfterSent = await payerRequest.waitForConfirmation();
-  console.log("GOT HERE");
-  console.log(
-    "payerRequestDataAfterSent: " +
-      JSON.stringify(payerRequestDataAfterSent, null, 2),
-  );
+  // const payerRequestDataAfterSent = await payerRequest.waitForConfirmation();
+  // console.log("GOT HERE");
+  // console.log(
+  //   "payerRequestDataAfterSent: " +
+  //     JSON.stringify(payerRequestDataAfterSent, null, 2),
+  // );
 })();
