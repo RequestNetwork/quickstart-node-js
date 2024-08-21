@@ -117,11 +117,8 @@ const waitForConfirmation = async (dataOrPromise) => {
       JSON.stringify(payerRequestDataAfterSent, null, 2),
   );
 
-  const payerReqeustDataAfterSentConfirmed = await new Promise(
-    (resolve, reject) => {
-      payerRequestDataAfterSent.on("confirmed", resolve);
-      payerRequestDataAfterSent.on("error", reject);
-    },
+  const payerReqeustDataAfterSentConfirmed = waitForConfirmation(
+    payerRequestDataAfterSent,
   );
 
   console.log(
