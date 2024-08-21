@@ -13,21 +13,27 @@
   // Load environment variables from .env file
   config();
 
-  const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
+  const payeeEpkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
     privateKey: process.env.PAYEE_PRIVATE_KEY, // Must include 0x prefix
+  });
+
+  const payerEpkSignatureProvider = new EthereumPrivateKeySignatureProvider({
+    method: Types.Signature.METHOD.ECDSA,
+    privateKey: process.env.PAYER_PRIVATE_KEY, // Must include 0x prefix
   });
 
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
       baseURL: "https://sepolia.gateway.request.network/",
     },
-    signatureProvider: epkSignatureProvider,
+    signatureProvider: payeeEpkSignatureProvider,
   });
 
-  // In this example, the payee is also the payer and payment recipient.
   const payeeIdentity = new Wallet(process.env.PAYEE_PRIVATE_KEY).address;
-  const payerIdentity = payeeIdentity;
+  const payerIdentity = new Wallet(process.env.PAYER_PRIVATE_KEY).address;
+
+  // In this example, the payee is also the payment recipient.
   const paymentRecipient = payeeIdentity;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
 
