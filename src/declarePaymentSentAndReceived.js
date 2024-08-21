@@ -127,8 +127,8 @@ process.on("unhandledRejection", (err) => {
 
   const payerReqeustDataAfterSentConfirmed = await new Promise(
     (resolve, reject) => {
-      data.on("confirmed", resolve);
-      data.on("error", reject);
+      payerRequestDataAfterSent.on("confirmed", resolve);
+      payerRequestDataAfterSent.on("error", reject);
     },
   );
 
