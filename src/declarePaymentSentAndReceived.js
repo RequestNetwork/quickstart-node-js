@@ -99,13 +99,11 @@ const waitForConfirmation = async (dataOrPromise) => {
     requestCreateParameters,
   );
   const payeeRequestData = await payeeRequest.waitForConfirmation();
-  // console.log("payeeRequestData: " + JSON.stringify(payeeRequestData, null, 2));
 
   const payerRequest = await payerRequestClient.fromRequestId(
     payeeRequestData.requestId,
   );
   const payerRequestData = payerRequest.getData();
-  // console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
 
   const payerRequestDataAfterSent = await payerRequest.declareSentPayment(
     payerRequestData.expectedAmount,
@@ -117,12 +115,11 @@ const waitForConfirmation = async (dataOrPromise) => {
       JSON.stringify(payerRequestDataAfterSent, null, 2),
   );
 
-  const payerReqeustDataAfterSentConfirmed = await waitForConfirmation(
+  const payerRequestDataAfterSentConfirmed = await waitForConfirmation(
     payerRequestDataAfterSent,
   );
-
   console.log(
-    "payerReqeustDataAfterSentConfirmed: " +
-      JSON.stringify(payerReqeustDataAfterSentConfirmed, null, 2),
+    "payerRequestDataAfterSentConfirmed: " +
+      JSON.stringify(payerRequestDataAfterSentConfirmed, null, 2),
   );
 })();
