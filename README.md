@@ -39,4 +39,5 @@ Run the scripts
 npm run retrieve
 npm run create
 npm run pay
+npm run declare
 ```
