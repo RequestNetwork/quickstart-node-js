@@ -104,7 +104,14 @@
     "payment initiated from the bank",
     payerIdentity,
   );
+  // console.log(
+  //   "payerRequestData2: " + JSON.stringify(payerRequestData2, null, 2),
+  // );
+
+  const payerRequestDataAfterSent =
+    await payerRequestData2.waitForConfirmation();
   console.log(
-    "payerRequestData2: " + JSON.stringify(payerRequestData2, null, 2),
+    "payerRequestDataAfterSent: " +
+      JSON.stringify(payerRequestDataAfterSent, null, 2),
   );
 })();
