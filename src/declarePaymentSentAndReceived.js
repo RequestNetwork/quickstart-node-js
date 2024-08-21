@@ -125,16 +125,9 @@ process.on("unhandledRejection", (err) => {
   );
 
   payerRequestData2.on("confirmed", () => {
-    console.log("Payment sent confirmed");
+    console.log(
+      "payerRequestDataAfterSent: " +
+        JSON.stringify(payerRequestData2, null, 2),
+    );
   });
-
-  const boundPayerRequestWaitForConfirmation =
-    payerRequest.waitForConfirmation.bind(payerRequest);
-  const payerRequestDataAfterSent =
-    await boundPayerRequestWaitForConfirmation();
-  console.log("GOT HERE");
-  console.log(
-    "payerRequestDataAfterSent: " +
-      JSON.stringify(payerRequestDataAfterSent, null, 2),
-  );
 })();
