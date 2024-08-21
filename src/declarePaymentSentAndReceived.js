@@ -41,10 +41,10 @@
     requestInfo: {
       currency: {
         type: Types.RequestLogic.CURRENCY.ERC20,
-        value: "0x370DE27fdb7D1Ff1e1BaA7D11c5820a324Cf623C",
+        value: "0x370DE27fdb7D1Ff1e1BaA7D11c5820a324Cf623C", // FAU token address
         network: "sepolia",
       },
-      expectedAmount: "1000000000000000000",
+      expectedAmount: "1000000000000000000", // 1.0
       payee: {
         type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
         value: payeeIdentity,
@@ -56,6 +56,7 @@
       timestamp: Utils.getCurrentTimestampInSecond(),
     },
     paymentNetwork: {
+      // We can declare payments because ERC20 fee proxy payment network inherits from declarative payment network
       id: Types.Extension.PAYMENT_NETWORK_ID.ERC20_FEE_PROXY_CONTRACT,
       parameters: {
         paymentNetworkName: "sepolia",
