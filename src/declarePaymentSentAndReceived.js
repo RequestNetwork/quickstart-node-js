@@ -37,11 +37,23 @@
     signatureProvider: payerEpkSignatureProvider,
   });
 
-  const payeeIdentity = new Wallet(process.env.PAYEE_PRIVATE_KEY).address;
-  const payerIdentity = new Wallet(process.env.PAYER_PRIVATE_KEY).address;
+  const payeeIdentityAddress = new Wallet(process.env.PAYEE_PRIVATE_KEY)
+    .address;
+  const payerIdentityAddress = new Wallet(process.env.PAYER_PRIVATE_KEY)
+    .address;
+
+  const payeeIdentity = {
+    type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
+    value: payeeIdentityAddress,
+  };
+
+  const payerIdentity = {
+    type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
+    value: payerIdentityAddress,
+  };
 
   // In this example, the payee is also the payment recipient.
-  const paymentRecipient = payeeIdentity;
+  const paymentRecipient = payeeIdentityAddress;
   const feeRecipient = "0x0000000000000000000000000000000000000000";
 
   const requestCreateParameters = {
@@ -52,14 +64,8 @@
         network: "sepolia",
       },
       expectedAmount: "1000000000000000000", // 1.0
-      payee: {
-        type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
-        value: payeeIdentity,
-      },
-      payer: {
-        type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
-        value: payerIdentity,
-      },
+      payee: payeeIdentity,
+      payer: payerIdentity,
       timestamp: Utils.getCurrentTimestampInSecond(),
     },
     paymentNetwork: {
@@ -78,10 +84,7 @@
       builderId: "request-network",
       createdWith: "quickstart",
     },
-    signer: {
-      type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
-      value: payeeIdentity,
-    },
+    signer: payeeIdentity,
   };
 
   const payeeRequest = await payeeRequestClient.createRequest(
