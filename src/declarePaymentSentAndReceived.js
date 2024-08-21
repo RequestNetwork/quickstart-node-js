@@ -115,21 +115,26 @@ process.on("unhandledRejection", (err) => {
   const payerRequestData = payerRequest.getData();
   // console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
 
-  const payerRequestData2 = await waitForConfirmation(
-    payerRequest.declareSentPayment(
-      payerRequestData.expectedAmount,
-      "payment initiated from the bank",
-      payerIdentity,
-    ),
+  const payerRequestData2 = await payerRequest.declareSentPayment(
+    payerRequestData.expectedAmount,
+    "payment initiated from the bank",
+    payerIdentity,
   );
   console.log(
     "payerRequestData2: " + JSON.stringify(payerRequestData2, null, 2),
   );
 
-  // const payerRequestDataAfterSent = await payerRequest.waitForConfirmation();
-  // console.log("GOT HERE");
-  // console.log(
-  //   "payerRequestDataAfterSent: " +
-  //     JSON.stringify(payerRequestDataAfterSent, null, 2),
-  // );
+  payerRequestData2.on("confirmed", () => {
+    console.log("Payment sent confirmed");
+  });
+
+  const boundPayerRequestWaitForConfirmation =
+    payerRequest.waitForConfirmation.bind(payerRequest);
+  const payerRequestDataAfterSent =
+    await boundPayerRequestWaitForConfirmation();
+  console.log("GOT HERE");
+  console.log(
+    "payerRequestDataAfterSent: " +
+      JSON.stringify(payerRequestDataAfterSent, null, 2),
+  );
 })();
