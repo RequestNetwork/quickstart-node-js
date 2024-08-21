@@ -121,16 +121,19 @@ process.on("unhandledRejection", (err) => {
     payerIdentity,
   );
   console.log(
-    "payerRequestData2: " + JSON.stringify(payerRequestDataAfterSent, null, 2),
+    "payerRequestDataAfterSent: " +
+      JSON.stringify(payerRequestDataAfterSent, null, 2),
   );
 
-  const payerReqeustDataAfterSentConfirmed = await payerRequestDataAfterSent.on(
-    "confirmed",
-    () => {},
+  const payerReqeustDataAfterSentConfirmed = await new Promise(
+    (resolve, reject) => {
+      data.on("confirmed", resolve);
+      data.on("error", reject);
+    },
   );
 
   console.log(
-    "payerReqeustData2AfterConfirmed: " +
+    "payerReqeustDataAfterSentConfirmed: " +
       JSON.stringify(payerReqeustDataAfterSentConfirmed, null, 2),
   );
 })();
