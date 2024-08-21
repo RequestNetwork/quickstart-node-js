@@ -1,3 +1,11 @@
+process.on("uncaughtException", (err) => {
+  console.error(err);
+  process.exit(1);
+});
+process.on("unhandledRejection", (err) => {
+  console.error(err);
+  process.exit(1);
+});
 (async () => {
   const {
     RequestNetwork,
@@ -12,15 +20,6 @@
 
   // Load environment variables from .env file
   config();
-
-  process.on("uncaughtException", (err) => {
-    console.error(err);
-    process.exit(1);
-  });
-  process.on("unhandledRejection", (err) => {
-    console.error(err);
-    process.exit(1);
-  });
 
   const payeeEpkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
