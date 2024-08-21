@@ -13,6 +13,15 @@
   // Load environment variables from .env file
   config();
 
+  process.on("uncaughtException", (err) => {
+    console.error(err);
+    process.exit(1);
+  });
+  process.on("unhandledRejection", (err) => {
+    console.error(err);
+    process.exit(1);
+  });
+
   const payeeEpkSignatureProvider = new EthereumPrivateKeySignatureProvider({
     method: Types.Signature.METHOD.ECDSA,
     privateKey: process.env.PAYEE_PRIVATE_KEY, // Must include 0x prefix
