@@ -23,11 +23,18 @@
     privateKey: process.env.PAYER_PRIVATE_KEY, // Must include 0x prefix
   });
 
-  const requestClient = new RequestNetwork({
+  const payeeRequestClient = new RequestNetwork({
     nodeConnectionConfig: {
       baseURL: "https://sepolia.gateway.request.network/",
     },
     signatureProvider: payeeEpkSignatureProvider,
+  });
+
+  const payerRequestClient = new RequestNetwork({
+    nodeConnectionConfig: {
+      baseURL: "https://sepolia.gateway.request.network/",
+    },
+    signatureProvider: payerEpkSignatureProvider,
   });
 
   const payeeIdentity = new Wallet(process.env.PAYEE_PRIVATE_KEY).address;
@@ -77,7 +84,9 @@
     },
   };
 
-  const request = await requestClient.createRequest(requestCreateParameters);
+  const request = await payeeRequestClient.createRequest(
+    requestCreateParameters,
+  );
   const requestData = await request.waitForConfirmation();
   console.log(JSON.stringify(requestData));
 })();
