@@ -61,6 +61,8 @@
     contentData: {
       reason: "🍕",
       dueDate: "2023.06.16",
+      builderId: "request-network",
+      createdWith: "quickstart",
     },
     signer: {
       type: Types.Identity.TYPE.ETHEREUM_ADDRESS,
