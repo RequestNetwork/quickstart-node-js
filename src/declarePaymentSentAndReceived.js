@@ -122,4 +122,40 @@ const waitForConfirmation = async (dataOrPromise) => {
     "payerRequestDataAfterSentConfirmed: " +
       JSON.stringify(payerRequestDataAfterSentConfirmed, null, 2),
   );
+  console.log(
+    "Observe extensionsData contains 3 events: paymentNetwork 'create', contentData 'create', and paymentNetwork 'declareSentPayment'",
+  );
+
+  const payeeRequestDataRefreshed = await payeeRequest.refresh();
+
+  const payeeRequestDataAfterReceived =
+    await payeeRequest.declareReceivedPayment(
+      payeeRequestDataRefreshed.expectedAmount,
+      "payment received from the bank",
+      payeeIdentity,
+    );
+
+  const payeeRequestDataAfterReceivedConfirmed = await waitForConfirmation(
+    payeeRequestDataAfterReceived,
+  );
+  console.log(
+    "payeeRequestDataAfterReceivedConfirmed: " +
+      JSON.stringify(payeeRequestDataAfterReceivedConfirmed, null, 2),
+  );
+  console.log(
+    "Observe extensionsData contains 4 events: paymentNetwork 'create', contentData 'create', paymentNetwork 'declareSentPayment', and paymentNetwork 'declareReceivedPayment'",
+  );
+
+  console.log(
+    "Request balance: " +
+      payeeRequestDataAfterReceivedConfirmed.balance.balance,
+  );
+  console.log(
+    "Request balance events: " +
+      JSON.stringify(
+        payeeRequestDataAfterReceivedConfirmed.balance.events,
+        null,
+        2,
+      ),
+  );
 })();
