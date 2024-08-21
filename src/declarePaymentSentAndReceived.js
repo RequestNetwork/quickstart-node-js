@@ -99,7 +99,7 @@
   const payerRequestData = payerRequest.getData();
   console.log("payerRequestData: " + JSON.stringify(payerRequestData, null, 2));
 
-  const payerRequestData2 = payerRequest.declareSentPayment(
+  const payerRequestData2 = await payerRequest.declareSentPayment(
     payerRequestData.expectedAmount,
     "payment initiated from the bank",
     payerIdentity,
