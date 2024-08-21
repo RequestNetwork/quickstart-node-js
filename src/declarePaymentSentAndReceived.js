@@ -108,8 +108,7 @@
   //   "payerRequestData2: " + JSON.stringify(payerRequestData2, null, 2),
   // );
 
-  const payerRequestDataAfterSent =
-    await payerRequestData2.waitForConfirmation();
+  const payerRequestDataAfterSent = await payerRequest.waitForConfirmation();
   console.log(
     "payerRequestDataAfterSent: " +
       JSON.stringify(payerRequestDataAfterSent, null, 2),
