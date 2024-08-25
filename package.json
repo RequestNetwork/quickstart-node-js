@@ -8,7 +8,8 @@
     "prepare": "husky install",
     "retrieve": "node src/retrieveRequest.js",
     "create": "node src/createRequest.js",
-    "pay": "node src/payRequest.js"
+    "pay": "node src/payRequest.js",
+    "declare": "node src/declarePaymentSentAndReceived.js"
   },
   "author": "",
   "license": "ISC",
