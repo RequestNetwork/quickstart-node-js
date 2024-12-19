@@ -9,7 +9,8 @@
     "retrieve": "node src/retrieveRequest.js",
     "create": "node src/createRequest.js",
     "pay": "node src/payRequest.js",
-    "declare": "node src/declarePaymentSentAndReceived.js"
+    "declare": "node src/declarePaymentSentAndReceived.js",
+    "delegate": "node src/delegateDeclarePaymentSentAndReceived.js"
   },
   "author": "",
   "license": "ISC",
