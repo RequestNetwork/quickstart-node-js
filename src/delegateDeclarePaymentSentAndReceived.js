@@ -159,11 +159,13 @@ const waitForConfirmation = async (dataOrPromise) => {
     "payeeRequestDataAfterDelegateConfirmed: " +
       JSON.stringify(payeeRequestDataAfterDelegateConfirmed, null, 2),
   );
+  console.log(
+    "Observe that extensions.pn-erc20-fee-proxy-contract.values.payeeDelegate is set to the payee delegate identity",
+  );
 
   const payerRequest = await payerRequestClient.fromRequestId(
     payeeRequestData.requestId,
   );
-  const payerRequestData = payerRequest.getData();
 
   const payerRequestDataAfterDelegate =
     await payerRequest.addDeclarativeDelegate(
@@ -181,6 +183,9 @@ const waitForConfirmation = async (dataOrPromise) => {
   console.log(
     "payerRequestDataAfterDelegateConfirmed: " +
       JSON.stringify(payerRequestDataAfterDelegateConfirmed, null, 2),
+  );
+  console.log(
+    "Observe that extensions.pn-erc20-fee-proxy-contract.values.payerDelegate is set to the payer delegate identity",
   );
 
   const payerDelegateRequest = await payerDelegateRequestClient.fromRequestId(
@@ -208,7 +213,7 @@ const waitForConfirmation = async (dataOrPromise) => {
       JSON.stringify(payerDelegateRequestDataAfterSentConfirmed, null, 2),
   );
   console.log(
-    "Observe extensionsData contains 5 events: paymentNetwork 'create', contentData 'create', paymentNetwork 'delegate' x2, and paymentNetwork 'declareSentPayment'",
+    "Observe extensionsData contains 5 events: paymentNetwork 'create', contentData 'create', paymentNetwork 'addDelegate' x2, and paymentNetwork 'declareSentPayment'",
   );
 
   const payeeDelegateRequest = await payeeDelegateRequestClient.fromRequestId(
@@ -231,12 +236,15 @@ const waitForConfirmation = async (dataOrPromise) => {
       JSON.stringify(payeeDelegateRequestDataAfterReceivedConfirmed, null, 2),
   );
   console.log(
-    "Observe extensionsData contains 6 events: paymentNetwork 'create', contentData 'create', paymentNetwork 'delegate' x2, paymentNetwork 'declareSentPayment', and paymentNetwork 'declareReceivedPayment'",
+    "Observe extensionsData contains 6 events: paymentNetwork 'create', contentData 'create', paymentNetwork 'addDelegate' x2, paymentNetwork 'declareSentPayment', and paymentNetwork 'declareReceivedPayment'",
   );
 
   console.log(
     "Request balance: " +
       payeeDelegateRequestDataAfterReceivedConfirmed.balance.balance,
+  );
+  console.log(
+    `Observe that the balance is ${requestCreateParameters.requestInfo.expectedAmount}`,
   );
   console.log(
     "Request balance events: " +
@@ -245,5 +253,8 @@ const waitForConfirmation = async (dataOrPromise) => {
         null,
         2,
       ),
+  );
+  console.log(
+    `Observe that the balance event note is "payment received from the bank"`,
   );
 })();
