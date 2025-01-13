@@ -10,7 +10,8 @@
     "create": "node src/createRequest.js",
     "pay": "node src/payRequest.js",
     "declare": "node src/declarePaymentSentAndReceived.js",
-    "delegate": "node src/delegateDeclarePaymentSentAndReceived.js"
+    "delegate": "node src/delegateDeclarePaymentSentAndReceived.js",
+    "hinkal-deposit": "node src/depositToHinkalShieldedAddress.js"
   },
   "author": "",
   "license": "ISC",
