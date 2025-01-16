@@ -1,5 +1,5 @@
 import { sendToHinkalShieldedAddressFromPublic } from "@requestnetwork/payment-processor";
-import { providers } from "ethers";
+import { providers, Wallet } from "ethers";
 
 // This function is required to wait for the indexing of shielded balance changes in Hinkal
 const waitLittle = (time = 15) =>
@@ -25,7 +25,19 @@ const waitLittle = (time = 15) =>
   }
   const tokenAddress =
     process.env.TOKEN_ADDRESS || "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"; // USDC on Base
+
+  if (!ethers.utils.isAddress(tokenAddress)) {
+    console.error("Invalid token address: ", tokenAddress);
+    process.exit(1);
+  }
+
   const amount = process.env.DEPOSIT_AMOUNT || "1000000"; // 1 USDC
+
+  if (!amount.match(/^\d+$/)) {
+    console.error("Invalid amount: ", amount);
+    process.exit(1);
+  }
+
   // Hinkal shielded addresses must be shared out-of-band.
   // The RN SDK doesn't offer functions for sharing Hinkal shielded addresses.
   const paymentRecipientShieldedAddress =
