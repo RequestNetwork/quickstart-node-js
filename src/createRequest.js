@@ -20,7 +20,7 @@
 
   const requestClient = new RequestNetwork({
     nodeConnectionConfig: {
-      baseURL: "https://sepolia.gateway.request.network/",
+      baseURL: "http://localhost:3000/",
     },
     signatureProvider: epkSignatureProvider,
   });
