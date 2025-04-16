@@ -28,6 +28,7 @@
   let aborted = false;
   let successfulRequests = 0;
   let failedRequests = 0;
+  let inProgressRequests = 0;
 
   // Setup Abort Handling (Ctrl+C)
   process.on("SIGINT", () => {
@@ -35,11 +36,22 @@
     aborted = true;
   });
 
-  // Setup Progress Bar
-  const progressBar = new cliProgress.SingleBar(
-    {},
+  // Create a multi-bar container
+  const multibar = new cliProgress.MultiBar(
+    {
+      clearOnComplete: false,
+      hideCursor: true,
+      format:
+        " {bar} | {percentage}% | S: {successful}, F: {failed}, IP: {inProgress} | {value}/{total}",
+    },
     cliProgress.Presets.shades_classic,
   );
+
+  const progressBar = multibar.create(TOTAL_REQUESTS, 0, {
+    successful: 0,
+    failed: 0,
+    inProgress: 0,
+  });
 
   try {
     const epkSignatureProvider = new EthereumPrivateKeySignatureProvider({
@@ -66,23 +78,26 @@
     console.log(
       `Attempting to create ${TOTAL_REQUESTS} requests with concurrency ${CONCURRENCY_LIMIT}...`,
     );
-    progressBar.start(TOTAL_REQUESTS, 0);
 
     for (let i = 0; i < TOTAL_REQUESTS; i++) {
       if (aborted) {
         console.log(`Skipping remaining requests due to abort signal.`);
-        break; // Stop adding new tasks if aborted
+        break;
       }
 
       creationPromises.push(
         limit(async () => {
-          // Double-check abort flag before starting the async operation
-          if (aborted) {
-            return;
-          }
+          if (aborted) return;
 
           try {
-            // Use a unique identifier or timestamp if content needs variation
+            // Increment in-progress counter and update progress bar
+            inProgressRequests++;
+            progressBar.update(successfulRequests + failedRequests, {
+              successful: successfulRequests,
+              failed: failedRequests,
+              inProgress: inProgressRequests,
+            });
+
             const uniqueContent = `Request #${i + 1} - ${Date.now()}`;
 
             const requestCreateParameters = {
@@ -128,31 +143,35 @@
             const requestData = await request.waitForConfirmation();
             successfulRequests++;
           } catch (error) {
-            console.error(
-              `\nFailed to create request: ${error.message || error}`,
-            );
+            const errorMessage = error.message || error.toString();
+            // Simplified error output to avoid console spam
+            console.error(`\nRequest failed: ${errorMessage.split("\n")[0]}`);
             failedRequests++;
           } finally {
-            // Ensure progress bar updates even if aborted after starting the task
-            if (!aborted) {
-              progressBar.increment();
-            }
+            inProgressRequests--; // Decrement in-progress counter
+            progressBar.update(successfulRequests + failedRequests, {
+              successful: successfulRequests,
+              failed: failedRequests,
+              inProgress: inProgressRequests,
+            });
           }
         }),
       );
     }
 
-    // Wait for all queued promises to settle
     await Promise.all(creationPromises);
   } catch (error) {
     console.error(`\nAn unexpected error occurred: ${error.message || error}`);
-    aborted = true; // Stop progress bar on unexpected errors
+    aborted = true;
   } finally {
-    progressBar.stop();
+    // Stop the progress bar
+    multibar.stop();
+
     console.log("\n--- Request Creation Summary ---");
     console.log(`Total attempted: ${successfulRequests + failedRequests}`);
     console.log(`Successful: ${successfulRequests}`);
     console.log(`Failed: ${failedRequests}`);
+
     if (aborted && successfulRequests + failedRequests < TOTAL_REQUESTS) {
       console.log(
         `Process aborted. ${
