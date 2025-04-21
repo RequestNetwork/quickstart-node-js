@@ -14,7 +14,7 @@
 
   // --- Configuration ---
   const TOTAL_REQUESTS = 100; // Total number of requests to create
-  const CONCURRENCY_LIMIT = 10; // Number of requests to create concurrently
+  const CONCURRENCY_LIMIT = 100; // Number of requests to create concurrently
   // ---------------------
 
   // Load environment variables from .env file
