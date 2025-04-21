@@ -41,4 +41,5 @@ npm run create
 npm run pay
 npm run declare
 npm run delegate
+npm run create-many
 ```
