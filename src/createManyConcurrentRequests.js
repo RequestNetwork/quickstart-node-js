@@ -61,7 +61,7 @@
 
     const requestClient = new RequestNetwork({
       nodeConnectionConfig: {
-        baseURL: "http://localhost:3000/",
+        baseURL: process.env.REQUEST_NODE_URL || "http://localhost:3000/",
       },
       signatureProvider: epkSignatureProvider,
     });
