@@ -11,7 +11,8 @@
     "pay": "node src/payRequest.js",
     "declare": "node src/declarePaymentSentAndReceived.js",
     "delegate": "node src/delegateDeclarePaymentSentAndReceived.js",
-    "hinkal-deposit": "node src/depositToHinkalShieldedAddress.js"
+    "hinkal-deposit": "node src/depositToHinkalShieldedAddress.js",
+    "create-many": "node src/createManyConcurrentRequests.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,8 +20,10 @@
     "@requestnetwork/epk-signature": "0.9.5",
     "@requestnetwork/payment-processor": "0.52.0",
     "@requestnetwork/request-client.js": "0.54.0",
+    "cli-progress": "^3.12.0",
     "dotenv": "16.3.1",
-    "ethers": "5.7.2"
+    "ethers": "5.7.2",
+    "p-limit": "^6.2.0"
   },
   "devDependencies": {
     "husky": "8.0.3",
